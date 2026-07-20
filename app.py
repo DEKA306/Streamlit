@@ -43,3 +43,9 @@ if st.button("코디 완성하기"):
         * **매칭:** {shoes}와 {', '.join(acc) if acc else '악세서리 없이 깔끔하게!'}
         """)
         st.success("오늘의 스타일링이 완성되었습니다! 자신 있게 외출하세요! ")
+        with st.expander("리사 수의 얼굴 보기"):
+            st.image("https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRsTC_syMjfJll8-97bgSnlrm6-VYamikTdD7OTuIz4QAvifIECuxYXn3L4p5jHK8wL6FHLUtuECdWIUyK4LlYl_CGPSjx_vvN3EqUewx0_9CxyH7LNNX89me_Mx-gN8SPpdSlDpAS2rss&s=19")
+            st.write("킹갓제너럴엠퍼러 AMD의 1황 리사수")
+        with st.expander("젠슨 황의 얼굴보기"):
+            st.image("https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcR6AMajS0WEb2ufnoV8dkTkQntbkJtFI6J5PCm3ntfdRlBGW_nqpuZykqyUGu-A35t46efFodQzhYeDDmA4xulNgNEPFKQomEzl3w94yskW5COA_-OZgvRqpXW1sIYHyhOHc892rUfc7OAD&s=19")
+            st.write("최고의 그래픽카드")
