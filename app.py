@@ -14,8 +14,7 @@ creativity = st.slider("점수", 0, 50, 100)
 question = st.text_area("소감", placeholder="소감입니다.")
 
 if st.button("확인"):
-    if agree:
-        st.success(f"성공적으로 전송되었습니다! ({user_id}님)")
+    st.success(f"성공적으로 전송되었습니다! ({user_id}님)")
         st.markdown(f"""
         * **질문 내용:** {question}
         * **선택 모델:** `{ai_model}` | **말투:** `{tone}`
@@ -27,8 +26,6 @@ if st.button("확인"):
             st.info("참고: 14세 미만 사용자이므로 보호자 모드가 활성화됩니다.")
     else:
         st.error("⚠️ 동의 항목에 체크해야 전송이 가능합니다.")
-
-agree = st.checkbox("개인정보 수집 및 AI 학습 이용에 동의합니다.")
-st.markdown("---")
+)
 
 
