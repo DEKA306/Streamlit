@@ -59,4 +59,4 @@ if st.button("코디 완성하기"):
         with st.expander("젠슨 황의 얼굴보기"):
             st.image("https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcR6AMajS0WEb2ufnoV8dkTkQntbkJtFI6J5PCm3ntfdRlBGW_nqpuZykqyUGu-A35t46efFodQzhYeDDmA4xulNgNEPFKQomEzl3w94yskW5COA_-OZgvRqpXW1sIYHyhOHc892rUfc7OAD&s=19")
             st.write("최고의 그래픽카드")
-st.button('전체 초기화', on_click=reset_call')
+st.button('전체 초기화', on_click=reset_call)
