@@ -13,7 +13,7 @@ creativity = st.slider("점수", 0, 50, 100)
 
 question = st.text_area("소감", placeholder="소감입니다.")
 
-if st.button("질문 전송하기"):
+if st.button("확"):
     if agree:
         st.success(f"성공적으로 전송되었습니다! ({user_id}님)")
         st.markdown(f"""
