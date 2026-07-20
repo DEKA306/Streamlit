@@ -16,3 +16,6 @@ question = st.text_area("소감", placeholder="소감입니다.")
 if st.button("확인"):
     st.success(user_id+"/"+str(ai_model)+"학년/"+str(age)+"반/"+ai_speed)
     st.info("소감 : " + question)
+    st.markdown(f"""
+        * **점수:** `{creativity}%`
+        """)
