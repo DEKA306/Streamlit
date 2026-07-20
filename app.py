@@ -17,14 +17,15 @@ with col1:
         st.session_state.start_time = time.time() # 현재 시각 기록
         st.session_state.end_time = 0          # 종료 시간 초기화
 with col2:
-    if st.button("종료", on_click=reset_game):
+    if st.button("종료"):
         if st.session_state.start_time != 0:
             st.session_state.end_time = time.time()
             # 걸린 시간 계산 (종료 시간 - 시작 시간)
             st.session_state.result = st.session_state.end_time - st.session_state.start_time
         else:
             st.warning("시작 버튼을 먼저 눌러주세요!")
-
+    time.sleep(0.1)
+    reset_game
 if st.session_state.end_time != 0:
     diff = st.session_state.result
     st.header(f"결과: {diff:.2f}초") # 소수점 둘째자리까지 표시
