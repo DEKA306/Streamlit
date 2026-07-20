@@ -14,4 +14,5 @@ creativity = st.slider("점수", 0, 50, 100)
 question = st.text_area("소감", placeholder="소감입니다.")
 
 if st.button("확인"):
-    st.success(f"성공적으로 전송되었습니다")
+    st.success(user_id+"/"+str(ai_model)+"학년/"+str(age)+"반/"+ai_speed)
+    st.info("점수 : ")
