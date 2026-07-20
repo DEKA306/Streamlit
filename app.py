@@ -15,6 +15,6 @@ question = st.text_area("소감", placeholder="소감입니다.")
 
 if st.button("확인"):
     st.success(f"성공적으로 전송되었습니다")
-)
+
 
 
