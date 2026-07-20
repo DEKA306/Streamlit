@@ -18,7 +18,7 @@ with col1:
 with col2:
     if st.button("종료"):
         if st.session_state.start_time != 0:
-            ?? = time.time()
+            b = time.time()
             # 걸린 시간 계산 (종료 시간 - 시작 시간)
             st.session_state.result = a - time.time()
         else:
