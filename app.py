@@ -11,10 +11,7 @@ age = st.number_input("반", min_value=1, max_value=11, value=3)
 ai_speed = st.select_slider("난이도",options=["쉬움", "보통", "빠름"],value="보통")
 creativity = st.slider("점수", 0, 50, 100)
 
-question = st.text_area("AI에게 보낼 질문을 입력하세요", placeholder="여기에 질문을 작성해 주세요.")
-
-agree = st.checkbox("개인정보 수집 및 AI 학습 이용에 동의합니다.")
-st.markdown("---")
+question = st.text_area("소감", placeholder="소감입니다.")
 
 if st.button("질문 전송하기"):
     if agree:
@@ -30,3 +27,8 @@ if st.button("질문 전송하기"):
             st.info("참고: 14세 미만 사용자이므로 보호자 모드가 활성화됩니다.")
     else:
         st.error("⚠️ 동의 항목에 체크해야 전송이 가능합니다.")
+
+agree = st.checkbox("개인정보 수집 및 AI 학습 이용에 동의합니다.")
+st.markdown("---")
+
+
