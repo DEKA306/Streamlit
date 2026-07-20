@@ -1,62 +1,36 @@
 import streamlit as st
+import time
 
-def reset_all():
-    st.session_state.user_name = ''
-    st.session_state.weather = '맑음'
-    st.session_state.top_type = '후드티'
-    st.session_state.top_color = '밝음'
-    st.session_state.bottom_type = '청바지'
-    st.session_state.bottom_color = '슬림'
-    st.session_state.shoes = '스니커즈'
-    st.session_state.acc = []
+def reset_game():
+    ??
 
-with st.sidebar:
-    st.header("프로필")
-    user_name = st.text_input("닉네임", key="user_name")
-    weather = st.selectbox("오늘 날씨", ["맑음", "흐림", "비/눈", "매우 추움"], key="weather")
-    st.markdown("---")
-    st.info(f"반가워요, {user_name}님! 오늘 날씨는 `{weather}`이네요.")
+if 'start_time' not in st.session_state:
+    reset_game()
 
-st.title("👗 AI 코디 메이커")
-st.write("사이드바에서 날씨를 먼저 선택하고 코디를 시작하세요!")
-st.header("아이템 조합하기")
+st.title("10초 맞추기 게임!")
+st.write("시작 버튼을 누르고, 마음속으로 10초를 센 뒤 종료 버튼을 누르세요.")
+
 col1, col2 = st.columns(2)
 with col1:
-    st.subheader("상의")
-    top_type = st.radio("종류", ["후드티", "셔츠", "맨투맨", "반팔 티셔츠"], key="top_type")
-    top_color = st.select_slider("색상 톤", options=["밝음", "무난함", "어두움"], key="top_color")
+    if st.button("시작"):
+        a = time.time() # 현재 시각 기록
+        b = 0          # 종료 시간 초기화
 with col2:
-    st.subheader("하의")
-    bottom_type = st.radio("종류", ["청바지", "슬랙스", "트레이닝 팬츠", "반바지"], key="bottom_type")
-    bottom_color = st.select_slider("핏(Fit)", options=["슬림", "레귤러", "오버핏"], key="bottom_color")
+    if st.button("종료"):
+        if st.session_state.start_time != 0:
+            ?? = time.time()
+            # 걸린 시간 계산 (종료 시간 - 시작 시간)
+            st.session_state.result = a - time.time()
+        else:
+            st.warning("시작 버튼을 먼저 눌러주세요!")
 
-st.header("디테일 추가")
-tab1, tab2 = st.tabs(["신발", "악세서리"])
-with tab1:
-    st.write("오늘의 발걸음을 책임질 신발:")
-    shoes = st.selectbox("신발 선택", ["스니커즈", "운동화", "구두", "슬리퍼"], key="shoes")
-    with st.expander("신발 선택 팁 보기"):
-        st.info("너무 튀는 신발은 지양하도록해요!")
-with tab2:
-    st.write("포인트 아이템:")
-    acc = st.multiselect("악세서리 추가", ["모자", "안경", "목걸이", "가방"], key="acc")
-    with st.expander("악세서리 스타일링 팁 보기"):
-        st.warning("너무 튀는 신발은 지양하도록해요!")
-st.markdown("---")
-if st.button("코디 완성하기"):
-    with st.container(border=True):
-        st.subheader(f"{user_name}님의 오늘의 룩북")
-        st.write(f"오늘같은 **{weather}** 날씨에는 이렇게 입어보세요!")
-        st.markdown(f"""
-        * **상의:** {top_color} {top_type}
-        * **하의:** {bottom_color} {bottom_type}
-        * **매칭:** {shoes}와 {', '.join(acc) if acc else '악세서리 없이 깔끔하게!'}
-        """)
-        st.success("오늘의 스타일링이 완성되었습니다! 자신 있게 외출하세요! ")
-        with st.expander("리사 수의 얼굴 보기"):
-            st.image("https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRsTC_syMjfJll8-97bgSnlrm6-VYamikTdD7OTuIz4QAvifIECuxYXn3L4p5jHK8wL6FHLUtuECdWIUyK4LlYl_CGPSjx_vvN3EqUewx0_9CxyH7LNNX89me_Mx-gN8SPpdSlDpAS2rss&s=19")
-            st.write("킹갓제너럴엠퍼러 AMD의 1황 리사수")
-        with st.expander("젠슨 황의 얼굴보기"):
-            st.image("https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcR6AMajS0WEb2ufnoV8dkTkQntbkJtFI6J5PCm3ntfdRlBGW_nqpuZykqyUGu-A35t46efFodQzhYeDDmA4xulNgNEPFKQomEzl3w94yskW5COA_-OZgvRqpXW1sIYHyhOHc892rUfc7OAD&s=19")
-            st.write("최고의 그래픽카드")
-st.button('전체 초기화', on_click=reset_all)
+if st.session_state.end_time != 0:
+    diff = st.session_state.result
+    st.header(f"결과: {diff:.2f}초") # 소수점 둘째자리까지 표시
+    # 성공 판정 (9.7초 ~ 10.3초 사이)
+    if 9.7 <= diff <= 10.3:
+        st.success("대단해요! 정확합니다!")
+    else:
+        st.error(f"10초와 {abs(10-diff):.2f}초 차이가 납니다. 다시 도전해보세요!")
+
+st.button("다시 하기", on_click=reset_game)
