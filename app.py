@@ -4,6 +4,9 @@ st.markdown("# 앱 UI 만들기")
 user_id = st.text_input("이름", placeholder="example_user")
 
 ai_model = st.radio("학년", ["1", "2", "3"], horizontal=True)
+
+age = st.number_input("반", min_value=1, max_value=11, value=3)
+
 tone = st.selectbox("답변의 말투를 골라주세요", ["친절하게", "냉철하게", "유머러스하게"])
 features = st.multiselect("추가 기능을 선택하세요", ["이미지 생성", "웹 검색", "코드 분석", "번역"])
 creativity = st.slider("AI의 창의성 수준을 설정하세요", 0, 100, 50)
