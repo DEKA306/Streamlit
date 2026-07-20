@@ -2,7 +2,7 @@ import streamlit as st
 import time
 
 def reset_game():
-    ??
+    st.session_state.start_time = 0
 
 if 'start_time' not in st.session_state:
     reset_game()
