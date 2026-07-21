@@ -13,8 +13,6 @@ st.set_page_config(
 )
 
 st.title("AI Task Manager")
-st.write("해야 할 일을 기록하고 관리합니다.")
-st.title("AI Task Manager")
 
 task = st.text_input(
     "해야 할 일을 입력하세요",
@@ -23,6 +21,14 @@ task = st.text_input(
 
 if st.button("추가"):
     if task:
-        st.success(f"추가됨: {task}")
+        tasks.append(task)
+        local_storage.setItem("tasks", tasks)
+        st.success("저장되었습니다.")
+        st.rerun()
     else:
         st.warning("할 일을 입력해주세요.")
+
+st.subheader("해야 할 일")
+
+for i, t in enumerate(tasks):
+    st.write(f"{i+1}. {t}")
