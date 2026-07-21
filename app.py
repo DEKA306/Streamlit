@@ -66,19 +66,7 @@ def page_todo():
         with col_task:
             st.write(f"{i+1}. {item[0]}")
     
-        with col_btn:
-            if st.button("완료", key=f"complete_{i}"):
-    
-                # 완료 기록으로 이동
-                st.session_state.clear_list.append(item)
-    
-                # 현재 목록에서 삭제
-                st.session_state.todo_list.pop(i)
-    
-                save_todo()
-                st.rerun()
-    
-            if st.button("제거", key=f"delete_{i}"):
+     if st.button("제거", key=f"delete_{i}"):
     
                 # 그냥 삭제
                 st.session_state.todo_list.pop(i)
