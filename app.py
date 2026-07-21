@@ -80,9 +80,9 @@ def page_todo():
                 save_todo()
                 st.rerun()
 
-    with col_status:
-        if item[1]:
-            st.write("✅ **달성!**")
+        with col_status:
+            if item[1]:
+                st.write("✅ **달성!**")
     st.markdown("---")
 def page_report():
     st.header("AI가 짜주는 세부 목표 ")
