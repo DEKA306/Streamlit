@@ -105,28 +105,10 @@ def pg2():
     ]
 )
 
-            result = json.loads(
-        response.choices[0].message.content
-    )
-    
-    st.subheader("🎯 최종 목표")
-    st.info(result["main_goal"])
-    
-    
-    st.subheader("📋 세부 목표")
-    
-    for i, step in enumerate(result["steps"]):
-        with st.container():
-            st.markdown(f"### {i+1}. {step['title']}")
-            st.write(step["description"])
-            
-            col1, col2 = st.columns(2)
-    
-            with col1:
-                st.caption(f"⏱ 기간: {step['duration']}")
-    
-            with col2:
-                st.caption(f"⭐ 우선순위: {step['priority']}")
+            result = response.choices[0].message.content
+
+            st.subheader("세부 목표")
+            st.write(result)
 
     else:
         st.warning("먼저 1페이지에서 목표를 입력해주세요.")
