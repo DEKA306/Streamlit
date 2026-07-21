@@ -3,22 +3,26 @@ import streamlit.components.v1 as components
 from streamlit_local_storage import LocalStorage
 
 from openai import OpenAI
+
 ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 local_storage = LocalStorage()
 
-st.set_page_config(
-    page_title="AI Task Manager",
-    layout="wide"
-)
-
 st.title("AI Task Manager")
 
+# 저장된 작업 가져오기
+tasks = local_storage.getItem("tasks")
+
+if tasks is None:
+    tasks = []
+
+# 입력
 task = st.text_input(
     "해야 할 일을 입력하세요",
-    placeholder="예: OpenAI API 연결하기"
+    placeholder="예: 홈페이지 만들기"
 )
 
+# 추가
 if st.button("추가"):
     if task:
         tasks.append(task)
@@ -28,6 +32,7 @@ if st.button("추가"):
     else:
         st.warning("할 일을 입력해주세요.")
 
+# 목록 표시
 st.subheader("해야 할 일")
 
 for i, t in enumerate(tasks):
