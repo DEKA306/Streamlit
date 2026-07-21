@@ -46,6 +46,16 @@ def pg1():
                 tasks.pop(i)
                 local_storage.setItem("tasks", tasks)
                 st.rerun()
-pg = st.navigation([
-    st.Page(pg1, title="오늘의 다짐")], position="top")
+def pg2():
+    st.title("AI가 짜주는 세부 목표")
+    st.write("여기에 OpenAI 기능을 넣을 예정입니다.")
+pg = st.navigation(
+    [
+        st.Page(pg1, title="앞으로 해야할 큰 목표"),
+        st.Page(pg2, title="AI가 짜주는 세부 목표")
+    ],
+    position="top"
+)
+
+pg.run()
 pg.run()
