@@ -2,10 +2,8 @@ import streamlit as st
 
 if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
-if 'todo_list' not in st.session_state:
-    st.session_state.todo_list = []
-if 'motto_update' not in session_state:
-    st.session_state.motto_update = False
+if 'user_motto' not in st.session_state:
+    st.session_state.user_motto = "오늘도 화이팅!"
 
 def add_todo():
     task = st.session_state.todo_input
@@ -15,22 +13,12 @@ def add_todo():
         st.session_state.todo_input = ""
 
 st.title("🌱 갓생 살기 플래너")
-@st.dialog("현재 다짐 수정")
-def edit_motto():
-    motto = st.text_input("나의 한 줄 좌우명")
-    if st.button("다짐 저장"):
-        st.session_state.user_motto = motto
-        st.session_state.motto_updated = True
-        st.rerun
 def page_motto():
     st.header("📣 1. 오늘의 다짐")
-    st.info(f"현재 다짐: {st.session_state.user_motto}")
     motto = st.text_input("나의 한 줄 좌우명을 적어주세요")
-    if st.button("현재 버튼 수정하기"):
-        edit_motto()
-    if st.session_state.motto_updated:
+    if st.button("다짐 저장"):
+        st.session_state.user_motto = motto
         st.success("좌우명이 등록되었습니다!")
-        st.session_state.motto_updated = bool(0)
     st.markdown("---")
 
 def page_todo():
