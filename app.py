@@ -4,13 +4,8 @@ from streamlit_local_storage import LocalStorage
 import json
 from openai import OpenAI
 
-try:
-    ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY1"])
-    ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY2"])
-    ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY3"])
-    ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY4"])
-except:
-    print(1)
+ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY1"])
+
 local_storage = LocalStorage()
 
 st.title("AI Task Manager")
