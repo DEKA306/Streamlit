@@ -13,7 +13,7 @@ if "todo_list" not in st.session_state:
     if saved:
         st.session_state.todo_list = saved
     else:
-        st.session_state.todo_list = []]
+        st.session_state.todo_list = []
 if 'user_motto' not in st.session_state:
     st.session_state.user_motto = "오늘도 화이팅!"
 if 'motto_updated' not in st.session_state:
