@@ -2,3 +2,4 @@ streamlit
 openai
 pycomcigan
 requests
+streamlit-local-storage
