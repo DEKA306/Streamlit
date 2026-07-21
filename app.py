@@ -155,7 +155,7 @@ def pg2():
             st.error("JSON 파싱 중 오류가 발생했습니다.")
             st.text(st.session_state["ai_result_147"])
 def pg3():
-    st.title("🤖 AI와 함께 목표 달성하기")
+    st.title("AI와 함께 목표 달성하기")
 
     plan = local_storage.getItem("goal_plan")
     checked = local_storage.getItem("checked")
@@ -193,7 +193,7 @@ def pg3():
     # AI 채팅
     # -------------------
 
-    st.header("🧐 AI 코치와 대화하기")
+    st.header("AI 코치와 대화하기")
 
 
     if "coach_messages" not in st.session_state:
