@@ -8,7 +8,10 @@ ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 local_storage = LocalStorage()
 
 if "todo_list" not in st.session_state:
-    saved = local_storage.getItem("todo_list")
+    saved = local_storage.getItem(
+    "todo_list",
+    key="load_todo_list"
+)
 
     if saved:
         st.session_state.todo_list = saved
@@ -28,11 +31,14 @@ if "clear_list" not in st.session_state:
 def save_todo():
     local_storage.setItem(
         "todo_list",
-        st.session_state.todo_list
+        st.session_state.todo_list,
+        key="save_todo_list"
     )
+
     local_storage.setItem(
         "clear_list",
-        st.session_state.clear_list
+        st.session_state.clear_list,
+        key="save_clear_list"
     )
 def add_todo():
     task = st.session_state.todo_input
