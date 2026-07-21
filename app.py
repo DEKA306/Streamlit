@@ -1,6 +1,5 @@
 import streamlit as st
-from openai import OpenAI
-ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
 if 'user_motto' not in st.session_state:
@@ -74,30 +73,11 @@ def page_report():
         if st.button("기록 전체 초기화"):
             st.session_state.todo_list = []
             st.rerun()
-def ai_coach():
-    st.header("ai코치와 대화하기")
-    if "messages" not in st.session_state:
-        st.session_state.message = [
-            {"role":"system", "content":"너는 사용자의 할 일 목록과 달성 정도를 분석하여 조언하는 열정적인 코치야. 사용자가 더 멋진 삶을 살 수 있도록 명확한 조언과 응원해줘."}
-            ]
-    for message in st.session_state.messages:
-        if message["role"] != "system":
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
-    prompt = st.text_input("질문을 입력하세요")
-    if st.button("보내기"):
-        response = ai_client.responses.create(
-            model="gpt-5.4-mini", 
-            input = prompt
-        )
-        st.write(response.output_text)
+
 pg = st.navigation([
     st.Page(page_motto, title="오늘의 다짐", icon="📣"),
     st.Page(page_todo, title="오늘의 할 일", icon="✅"),
-    st.Page(page_report, title="나의 갓생 지수", icon="📈"),
-    st.Page(ai_coach, title = "ai 코치와 대화하기")], position="top")
-
+    st.Page(page_report, title="나의 갓생 지수", icon="📈")], position="top")
 
 st.title("🌱 갓생 살기 플래너")
-
 pg.run()
