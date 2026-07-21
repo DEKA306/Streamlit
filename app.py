@@ -10,7 +10,7 @@ try:
     ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY3"])
     ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY4"])
 except:
-    continue
+    print(1)
 local_storage = LocalStorage()
 
 st.title("AI Task Manager")
