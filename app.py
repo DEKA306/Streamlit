@@ -32,8 +32,19 @@ if st.button("추가"):
     else:
         st.warning("할 일을 입력해주세요.")
 
-# 목록 표시
 st.subheader("해야 할 일")
+
+for i, t in enumerate(tasks):
+    col1, col2 = st.columns([4, 1])
+
+    with col1:
+        st.write(f"{i+1}. {t}")
+
+    with col2:
+        if st.button("제거", key=f"remove_{i}"):
+            tasks.pop(i)
+            local_storage.setItem("tasks", tasks)
+            st.rerun()
 
 for i, t in enumerate(tasks):
     st.write(f"{i+1}. {t}")
