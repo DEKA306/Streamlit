@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from streamlit_local_storage import LocalStorage
-
+import json
 from openai import OpenAI
 
 ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -28,6 +28,10 @@ def pg1():
         if task:
             tasks.append(task)
             local_storage.setItem("tasks", tasks)
+    
+            # AI 페이지에서 사용할 큰 목표 저장
+            local_storage.setItem("main_goal", task)
+    
             st.success("저장되었습니다.")
             st.rerun()
         else:
