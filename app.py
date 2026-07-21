@@ -66,17 +66,17 @@ def page_todo():
         with col_task:
             st.write(f"{i+1}. {item[0]}")
     
-             if st.button("제거", key=f"delete_{i}"):
+            if st.button("제거", key=f"delete_{i}"):
             
-                        # 그냥 삭제
-                        st.session_state.todo_list.pop(i)
+                    # 그냥 삭제
+                    st.session_state.todo_list.pop(i)
             
-                        save_todo()
-                        st.rerun()
+                    save_todo()
+                    st.rerun()
             
-                with col_status:
-                    if item[1]:
-                        st.write("✅ **달성!**")
+            with col_status:
+                if item[1]:
+                    st.write("✅ **달성!**")
                 st.markdown("---")
 def page_report():
     st.header("AI가 짜주는 세부 목표 ")
