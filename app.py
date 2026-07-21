@@ -54,34 +54,35 @@ def page_todo():
 
     st.markdown("---")
 
-    for i in range(len(st.session_state.todo_list)):
-        col_task, col_btn, col_status = st.columns([4, 1, 1])
+    for i, item in enumerate(st.session_state.todo_list):
+    col_task, col_btn, col_status = st.columns([4, 1, 1])
 
-        with col_task:
-            st.write(f"{i+1}. {st.session_state.todo_list[i][0]}")
+    with col_task:
+        st.write(f"{i+1}. {item[0]}")
 
-        with col_btn:
-            if st.button("완료", key=f"complete_{i}"):
-                st.session_state.clear_list.append(st.session_state.todo_list[i])
-                st.session_state.todo_list.pop(i)
+    with col_btn:
+        if st.button("완료", key=f"complete_{i}"):
 
+            # 완료 기록으로 이동
+            st.session_state.clear_list.append(item)
 
-                # 완료 상태 저장
-                save_todo()
+            # 현재 목록에서 삭제
+            st.session_state.todo_list.pop(i)
 
-                st.rerun()
-            if st.button("제거", key=f"delete_{i}"):
-                st.session_state.todo_list.pop(i)
+            save_todo()
+            st.rerun()
 
-                # 제거
-                save_todo()
+        if st.button("제거", key=f"delete_{i}"):
 
-                st.rerun()
+            # 그냥 삭제
+            st.session_state.todo_list.pop(i)
 
-        with col_status:
-            if st.session_state.todo_list[i][1]:
-                st.write("✅ **달성!**")
+            save_todo()
+            st.rerun()
 
+    with col_status:
+        if item[1]:
+            st.write("✅ **달성!**")
     st.markdown("---")
 def page_report():
     st.header("AI가 짜주는 세부 목표 ")
