@@ -52,14 +52,14 @@ def page_todo():
             st.write(f"{i+1}. {st.session_state.todo_list[i][0]}")
 
         with col_btn:
-            if st.button("완료", key=f"btn_{i}"):
+            if st.button("완료", key=f"complete_{i}"):
                 st.session_state.todo_list.pop(i)
 
                 # 완료 상태 저장
                 save_todo()
 
                 st.rerun()
-            if st.button("제거", key=f"btn_{i}"):
+            if st.button("제거", key=f"delete_{i}"):
                 st.session_state.todo_list[i][1] = True
 
                 # 제거
