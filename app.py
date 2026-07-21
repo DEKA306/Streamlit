@@ -198,22 +198,10 @@ def pg3():
         st.session_state.coach_messages = [
             {
                 "role": "system",
-                "context" : f"""
-                [큰 목표]
-                {plan["main_goal"]}
-                
-                [세부 목표]
-                {json.dumps(plan["middle_goals"], ensure_ascii=False)}
-                
-                [진행 상황]
-                완료: {done}/{total}
-                완료율: {rate}%
-                
-                [남은 목표]
-                {unfinished}
-                
-                [사용자 질문]
-                {question}
+                "content": """
+                너는 사용자의 목표 달성을 돕는 AI 코치다.
+                사용자의 목표와 진행 상황을 보고
+                구체적인 행동 계획과 조언을 제공한다.
                 """
             }
         ]
@@ -253,21 +241,22 @@ def pg3():
         with st.chat_message("assistant"):
 
             context = f"""
-현재 목표:
-{plan["main_goal"]}
-
-현재 진행률:
-{rate}%
-
-완료한 개수:
-{done}/{total}
-
-아직 남은 목표:
-{unfinished}
-
-사용자의 질문:
-{question}
-"""
+                    [큰 목표]
+                    {plan["main_goal"]}
+                    
+                    [세부 목표]
+                    {json.dumps(plan["middle_goals"], ensure_ascii=False)}
+                    
+                    [진행 상황]
+                    완료: {done}/{total}
+                    완료율: {rate}%
+                    
+                    [남은 목표]
+                    {json.dumps(unfinished, ensure_ascii=False)}
+                    
+                    [사용자 질문]
+                    {question}
+                    """
 
 
             with st.spinner("AI 코치가 생각 중...🤔"):
