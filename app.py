@@ -26,7 +26,7 @@ def edit_motto():
         st.rerun()
         
 def page_todo():
-    st.header("✅ 2. 오늘의 할 일")
+    st.header("오늘의 할 일")
     st.write(f"현재 다짐: **{st.session_state.user_motto}**")
     new_todo = st.text_input("추가할 할 일을 입력하세요", key="todo_input")
     st.button("추가하기", on_click=add_todo)
@@ -48,7 +48,7 @@ def page_todo():
     st.markdown("---")
 
 def page_report():
-    st.header("📈 3. 나의 갓생 지수")
+    st.header("AI가 짜주는 세부 목표 ")
     if not st.session_state.todo_list:
         st.write("아직 등록된 할 일이 없습니다.")
     else:
@@ -100,5 +100,5 @@ pg = st.navigation([
     st.Page(page_report, title="나의 갓생 지수", icon="📈"),
     st.Page(page_ai_coach, title="AI 코칭", icon="🧐")], position="top")
 
-st.title("🌱 갓생 살기 플래너")
+##st.title("🌱 갓생 살기 플래너")
 pg.run()
