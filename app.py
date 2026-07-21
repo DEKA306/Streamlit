@@ -174,18 +174,25 @@ def pg3():
     unfinished = []
 
     for m_idx, middle in enumerate(plan["middle_goals"]):
+    
+        st.subheader(middle["middle_title"])
+    
         for s_idx, small in enumerate(middle["small_goals"]):
-
+    
             key = f"{m_idx}_{s_idx}"
-
+    
             total += 1
-
-            if checked.get(key):
+    
+            checked[key] = st.checkbox(
+                small,
+                value=checked.get(key, False),
+                key=f"check_{key}"
+            )
+    
+            if checked[key]:
                 done += 1
             else:
                 unfinished.append(small)
-
-
     rate = int(done / total * 100) if total else 0
 
 
