@@ -48,7 +48,58 @@ def pg1():
                 st.rerun()
 def pg2():
     st.title("AI가 짜주는 세부 목표")
-    st.write("여기에 OpenAI 기능을 넣을 예정입니다.")
+
+    main_goal = local_storage.getItem("main_goal")
+
+    if main_goal:
+        st.write("현재 목표:")
+        st.info(main_goal)
+
+        if st.button("세부 목표 만들기"):
+        
+            response = ai_client.chat.completions.create(
+            model="gpt-5.5-mini",
+            response_format={"type": "json_object"},
+            messages=[
+                {
+                    "role": "system",
+                    "content": """
+        너는 목표 관리 AI다.
+        
+        사용자의 큰 목표를 실행 가능한 세부 목표로 나눠라.
+        
+        반드시 아래 JSON 형식으로만 응답한다.
+        
+        {
+          "main_goal": "큰 목표",
+          "steps": [
+            {
+              "title": "세부 목표 제목",
+              "description": "해야 할 일 설명",
+              "duration": "예상 기간",
+              "priority": "우선순위"
+            }
+          ]
+        }
+        
+        steps는 3~7개를 만든다.
+        설명은 실제 행동 가능한 내용으로 작성한다.
+        """
+        },
+        {
+            "role": "user",
+            "content": main_goal
+        }
+    ]
+)
+
+            result = response.choices[0].message.content
+
+            st.subheader("세부 목표")
+            st.write(result)
+
+    else:
+        st.warning("먼저 1페이지에서 목표를 입력해주세요.")
 pg = st.navigation(
     [
         st.Page(pg1, title="앞으로 해야할 큰 목표"),
