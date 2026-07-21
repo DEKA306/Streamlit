@@ -34,6 +34,7 @@ def pg1():
             }
     
             local_storage.setItem("app_data", data)
+            local_storage.setItem("tasks", tasks)
     
             st.success("저장되었습니다.")
             st.rerun()
@@ -53,93 +54,102 @@ def pg1():
                 tasks.pop(i)
                 local_storage.setItem("tasks", tasks)
                 st.rerun()
+
 def pg2():
-    st.title("AI가 짜주는 세부 목표")
+    st.title("1-4-7 체계적 목표 설계")
 
-    data = local_storage.getItem("app_data")
+    # 저장된 tasks 불러오기
+    tasks = local_storage.getItem("tasks")
+    if not tasks:
+        tasks = []
 
-    if data:
-        main_goal = data["main_goal"]
-    else:
-        main_goal = None
+    if not tasks:
+        st.warning("먼저 1페이지에서 큰 목표들을 입력해주세요.")
+        return
 
-    if main_goal:
-        st.write("현재 목표:")
-        st.info(main_goal)
+    st.write("1페이지에 등록된 목표들 중 하나를 선택해 **1-4-7 구조**로 세부 계획을 세워보세요.")
+    
+    # 선택 박스로 어떤 목표를 1-4-7 구조로 짤지 고르기
+    selected_main_goal = st.selectbox("목표 선택", tasks)
 
-        if st.button("세부 목표 만들기"):
-        
+    if st.button("1-4-7 구조 생성하기"):
+        with st.spinner("AI가 1-4-7 목표 구조를 분석 및 설계 중입니다..."):
             response = ai_client.chat.completions.create(
-            model="gpt-4o-mini",
-            response_format={"type": "json_object"},
-            messages=[
-                {
-                    "role": "system",
-                    "content": """
-        너는 목표 관리 AI다.
-        
-        사용자의 큰 목표를 실행 가능한 세부 목표로 나눠라.
-        
-        반드시 아래 JSON 형식으로만 응답한다.
-        
-        {
-          "main_goal": "큰 목표",
-          "steps": [
-            {
-              "title": "세부 목표 제목",
-              "description": "해야 할 일 설명",
-              "duration": "예상 기간",
-              "priority": "우선순위"
-            }
-          ]
-        }
-        
-        steps는 3~7개를 만든다.
-        설명은 실제 행동 가능한 내용으로 작성한다.
-        """
-        },
-        {
-            "role": "user",
-            "content": main_goal
-        }
-    ]
-)
+                model="gpt-4o-mini",
+                response_format={"type": "json_object"},
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """
+                        너는 전문 목표 설계 AI다.
+                        사용자가 선택한 1개의 큰 목표를 바탕으로 '1-4-7 체계'에 맞춰 세부 목표를 구성하라.
+                        
+                        - 1: 큰 목표 (Main Goal)
+                        - 4: 중간 목표 (4개)
+                        - 7: 각각의 중간 목표마다 딸려 있는 작은 실행 목표 (각각 정확히 7개씩, 총 28개 혹은 구조화된 형태)
+                        
+                        반드시 아래 JSON 형식으로만 응답한다.
+                        {
+                          "main_goal": "선택된 큰 목표",
+                          "middle_goals": [
+                            {
+                              "middle_title": "중간 목표 1 제목",
+                              "small_goals": [
+                                "작은 목표 1",
+                                "작은 목표 2",
+                                "작은 목표 3",
+                                "작은 목표 4",
+                                "작은 목표 5",
+                                "작은 목표 6",
+                                "작은 목표 7"
+                              ]
+                            }
+                          ]
+                        }
+                        
+                        중간 목표는 정확히 4개를 만들고, 각 중간 목표 하위의 small_goals는 반드시 7개를 채워라.
+                        설명은 실천 가능한 구체적 행동으로 작성한다.
+                        """
+                    },
+                    {
+                        "role": "user",
+                        "content": selected_main_goal
+                    }
+                ]
+            )
 
             result = response.choices[0].message.content
+            # 세션 스테이트에 목표별로 저장하거나 공용으로 저장
+            st.session_state["ai_result_147"] = result
 
-            # --- [출력 부분 수정] ---
-            try:
-                result_data = json.loads(result)
-                
-                st.subheader(f"🎯 [{result_data.get('main_goal', main_goal)}] 실행 계획")
-                st.markdown("---")
+    # 저장된 결과 렌더링
+    if "ai_result_147" in st.session_state:
+        try:
+            result_data = json.loads(st.session_state["ai_result_147"])
+            
+            st.markdown(f"### 🎯 **[1단계] 큰 목표**: {result_data.get('main_goal', selected_main_goal)}")
+            st.markdown("---")
 
-                steps = result_data.get("steps", [])
-                
-                for idx, step in enumerate(steps, 1):
-                    with st.container(border=True):
-                        col1, col2, col3 = st.columns([3, 1, 1])
-                        
-                        with col1:
-                            st.markdown(f"### **Step {idx}. {step.get('title', '')}**")
-                        with col2:
-                            st.markdown(f"⏱️ **기간:** {step.get('duration', '-')}")
-                        with col3:
-                            st.markdown(f"🔥 **우선순위:** {step.get('priority', '-')}")
-                        
-                        st.write(step.get("description", ""))
+            middle_goals = result_data.get("middle_goals", [])
+            
+            for m_idx, m_goal in enumerate(middle_goals, 1):
+                with st.container(border=True):
+                    st.markdown(f"#### 📌 **[4단계 중 중간 목표 {m_idx}]** {m_goal.get('middle_title', '')}")
+                    
+                    small_goals = m_goal.get("small_goals", [])
+                    
+                    # 7개의 작은 목표를 깔끔하게 리스트 형태로 출력
+                    for s_idx, s_goal in enumerate(small_goals, 1):
+                        st.markdown(f"&nbsp;&nbsp;&nbsp;&nbsp;ㄴ **{s_idx}.** {s_goal}")
 
-            except json.JSONDecodeError:
-                st.error("JSON 파싱 중 오류가 발생했습니다.")
-                st.text(result)
-            # ------------------------
+        except json.JSONDecodeError:
+            st.error("JSON 파싱 중 오류가 발생했습니다.")
+            st.text(st.session_state["ai_result_147"])
 
-    else:
-        st.warning("먼저 1페이지에서 목표를 입력해주세요.")
 pg = st.navigation(
     [
         st.Page(pg1, title="앞으로 해야할 큰 목표"),
-        st.Page(pg2, title="AI가 짜주는 세부 목표")
+        st.Page(pg2, title="AI가 짜주는 1-4-7 세부 목표")
     ],
     position="top"
 )
