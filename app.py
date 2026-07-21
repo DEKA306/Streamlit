@@ -21,7 +21,7 @@ def edit_motto():
         st.rerun
 def page_motto():
     st.header("📣 1. 오늘의 다짐")
-    st.info(f"현재 다짐: {st.session_state.user_motto")
+    st.info(f"현재 다짐: {st.session_state.user_motto}")
     motto = st.text_input("나의 한 줄 좌우명을 적어주세요")
     if st.button("현재 버튼 수정하기"):
         edit_motto()
