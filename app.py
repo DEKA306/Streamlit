@@ -24,17 +24,7 @@ def edit_motto():
         st.session_state.user_motto = motto
         st.session_state.motto_updated = True
         st.rerun()
-
-def page_motto():
-    st.header("📣 1. 오늘의 다짐")
-    st.info(f"현재 다짐: {st.session_state.user_motto}")
-    if st.button("다짐 수정하기"):
-        edit_motto()
-    if st.session_state.motto_updated:
-        st.success("새로운 좌우명이 등록되었습니다!")
-        st.session_state.motto_updated = False
-    st.markdown("---")
-
+        
 def page_todo():
     st.header("✅ 2. 오늘의 할 일")
     st.write(f"현재 다짐: **{st.session_state.user_motto}**")
@@ -106,8 +96,7 @@ def page_ai_coach():
         st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
 pg = st.navigation([
-    st.Page(page_motto, title="오늘의 다짐", icon="📣"),
-    st.Page(page_todo, title="오늘의 할 일", icon="✅"),
+    st.Page(page_todo, title="오늘의 할 일"),
     st.Page(page_report, title="나의 갓생 지수", icon="📈"),
     st.Page(page_ai_coach, title="AI 코칭", icon="🧐")], position="top")
 
