@@ -27,10 +27,13 @@ def pg1():
     if st.button("추가"):
         if task:
             tasks.append(task)
-            local_storage.setItem("tasks", tasks)
     
-            # AI 페이지에서 사용할 큰 목표 저장
-            local_storage.setItem("main_goal", task)
+            data = {
+                "main_goal": task,
+                "tasks": tasks
+            }
+    
+            local_storage.setItem("app_data", data)
     
             st.success("저장되었습니다.")
             st.rerun()
@@ -53,7 +56,12 @@ def pg1():
 def pg2():
     st.title("AI가 짜주는 세부 목표")
 
-    main_goal = local_storage.getItem("main_goal")
+    data = local_storage.getItem("app_data")
+
+    if data:
+        main_goal = data["main_goal"]
+    else:
+        main_goal = None
 
     if main_goal:
         st.write("현재 목표:")
