@@ -45,6 +45,3 @@ for i, t in enumerate(tasks):
             tasks.pop(i)
             local_storage.setItem("tasks", tasks)
             st.rerun()
-
-for i, t in enumerate(tasks):
-    st.write(f"{i+1}. {t}")
