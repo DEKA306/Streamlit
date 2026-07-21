@@ -73,15 +73,6 @@ def page_report():
         if st.button("기록 전체 초기화"):
             st.session_state.todo_list = []
             st.rerun()
-
-pg = st.navigation([
-    st.Page(page_motto, title="오늘의 다짐", icon="📣"),
-    st.Page(page_todo, title="오늘의 할 일", icon="✅"),
-    st.Page(page_report, title="나의 갓생 지수", icon="📈"),
-    st.Page(ai_coach, title = "ai 코치와 대화하기")], position="top")
-
-
-st.title("🌱 갓생 살기 플래너")
 def ai_coach():
     st.header("ai코치와 대화하기")
     prompt = st.text_input("질문을 입력하세요")
@@ -91,4 +82,13 @@ def ai_coach():
             input = prompt
         )
         st.write(response.output_text)
+pg = st.navigation([
+    st.Page(page_motto, title="오늘의 다짐", icon="📣"),
+    st.Page(page_todo, title="오늘의 할 일", icon="✅"),
+    st.Page(page_report, title="나의 갓생 지수", icon="📈"),
+    st.Page(ai_coach, title = "ai 코치와 대화하기")], position="top")
+
+
+st.title("🌱 갓생 살기 플래너")
+
 pg.run()
