@@ -18,13 +18,17 @@ if 'user_motto' not in st.session_state:
     st.session_state.user_motto = "오늘도 화이팅!"
 if 'motto_updated' not in st.session_state:
     st.session_state.motto_updated = False
-
+if 'clear_list' not in st.session_state:
+    st.session_state.clear_list = []
 def save_todo():
     local_storage.setItem(
         "todo_list",
         st.session_state.todo_list
     )
-
+    local_storage.setItem(
+        "clear_list",
+        st.session_state.clear_list
+    )
 def add_todo():
     task = st.session_state.todo_input
     if task:
@@ -53,8 +57,9 @@ def page_todo():
 
         with col_btn:
             if st.button("완료", key=f"complete_{i}"):
-                
-                st.session_state.todo_list[i][1] = True
+                st.session_state.clear_list.append(st.session_state.todo_list[i])
+                st.session_state.todo_list.pop(i)
+
 
                 # 완료 상태 저장
                 save_todo()
