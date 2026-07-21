@@ -136,14 +136,14 @@ def pg2():
         try:
             result_data = json.loads(st.session_state["ai_result_147"])
             
-            st.markdown(f"### 🎯 **[1단계] 큰 목표**: {result_data.get('main_goal', selected_main_goal)}")
+            st.markdown(f"### **[1단계] 큰 목표**: {result_data.get('main_goal', selected_main_goal)}")
             st.markdown("---")
 
             middle_goals = result_data.get("middle_goals", [])
             
             for m_idx, m_goal in enumerate(middle_goals, 1):
                 with st.container(border=True):
-                    st.markdown(f"#### 📌 **[4단계 중 중간 목표 {m_idx}]** {m_goal.get('middle_title', '')}")
+                    st.markdown(f"#### **[4단계 중 중간 목표 {m_idx}]** {m_goal.get('middle_title', '')}")
                     
                     small_goals = m_goal.get("small_goals", [])
                     
