@@ -55,30 +55,30 @@ def page_todo():
     st.markdown("---")
 
     for i, item in enumerate(st.session_state.todo_list):
-    col_task, col_btn, col_status = st.columns([4, 1, 1])
-
-    with col_task:
-        st.write(f"{i+1}. {item[0]}")
-
-    with col_btn:
-        if st.button("완료", key=f"complete_{i}"):
-
-            # 완료 기록으로 이동
-            st.session_state.clear_list.append(item)
-
-            # 현재 목록에서 삭제
-            st.session_state.todo_list.pop(i)
-
-            save_todo()
-            st.rerun()
-
-        if st.button("제거", key=f"delete_{i}"):
-
-            # 그냥 삭제
-            st.session_state.todo_list.pop(i)
-
-            save_todo()
-            st.rerun()
+        col_task, col_btn, col_status = st.columns([4, 1, 1])
+    
+        with col_task:
+            st.write(f"{i+1}. {item[0]}")
+    
+        with col_btn:
+            if st.button("완료", key=f"complete_{i}"):
+    
+                # 완료 기록으로 이동
+                st.session_state.clear_list.append(item)
+    
+                # 현재 목록에서 삭제
+                st.session_state.todo_list.pop(i)
+    
+                save_todo()
+                st.rerun()
+    
+            if st.button("제거", key=f"delete_{i}"):
+    
+                # 그냥 삭제
+                st.session_state.todo_list.pop(i)
+    
+                save_todo()
+                st.rerun()
 
     with col_status:
         if item[1]:
