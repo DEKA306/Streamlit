@@ -198,7 +198,7 @@ def pg3():
         st.session_state.coach_messages = [
             {
                 "role": "system",
-                context = f"""
+                "context" : f"""
                 [큰 목표]
                 {plan["main_goal"]}
                 
