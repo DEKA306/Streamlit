@@ -81,7 +81,7 @@ def ai_coach():
             {"role":"system", "content":"너는 사용자의 할 일 목록과 달성 정도를 분석하여 조언하는 열정적인 코치야. 사용자가 더 멋진 삶을 살 수 있도록 명확한 조언과 응원해줘."}
             ]
     for message in st.session_state.messages:
-        if message["role"] not == "system":
+        if message["role"] != "system":
             with st.chat_message(message["role"]):
                 st.markdown("message["content"]")
     prompt = st.text_input("질문을 입력하세요")
