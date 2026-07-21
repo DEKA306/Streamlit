@@ -119,8 +119,14 @@ def pg2():
             )
 
             result = response.choices[0].message.content
-            # 세션 스테이트에 목표별로 저장하거나 공용으로 저장
+
             st.session_state["ai_result_147"] = result
+            
+            # pg3에서 사용
+            local_storage.setItem(
+                "goal_plan",
+                json.loads(result)
+            )
 
     # 저장된 결과 렌더링
     if "ai_result_147" in st.session_state:
@@ -192,11 +198,22 @@ def pg3():
         st.session_state.coach_messages = [
             {
                 "role": "system",
-                "content":
-                """
-                너는 목표 달성 전문 코치다.
-                사용자의 목표와 진행률을 분석하고
-                현실적인 다음 행동을 제안한다.
+                context = f"""
+                [큰 목표]
+                {plan["main_goal"]}
+                
+                [세부 목표]
+                {json.dumps(plan["middle_goals"], ensure_ascii=False)}
+                
+                [진행 상황]
+                완료: {done}/{total}
+                완료율: {rate}%
+                
+                [남은 목표]
+                {unfinished}
+                
+                [사용자 질문]
+                {question}
                 """
             }
         ]
