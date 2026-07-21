@@ -18,8 +18,8 @@ if tasks is None:
 
 # 입력
 task = st.text_input(
-    "해야 할 일을 입력하세요",
-    placeholder="예: 홈페이지 만들기"
+    "앞으로 해야 할 일을 입력하세요",
+    placeholder="여기에 입력해주세요. "
 )
 
 # 추가
