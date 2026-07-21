@@ -193,8 +193,13 @@ def pg3():
                 done += 1
             else:
                 unfinished.append(small)
+    local_storage.setItem(
+    "checked",
+    checked
+)
     rate = int(done / total * 100) if total else 0
-
+    st.progress(rate / 100)
+    st.write(f"완료율 : {rate}% ({done}/{total})")
 
     # -------------------
     # AI 채팅
@@ -289,7 +294,6 @@ def pg3():
                         }
                     ]
                 )
-
 
                 ai_response = response.choices[0].message.content
 
