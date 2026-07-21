@@ -18,13 +18,8 @@ if 'user_motto' not in st.session_state:
     st.session_state.user_motto = "오늘도 화이팅!"
 if 'motto_updated' not in st.session_state:
     st.session_state.motto_updated = False
-if "clear_list" not in st.session_state:
-    saved_clear = local_storage.getItem("clear_list")
-
-    if saved_clear:
-        st.session_state.clear_list = saved_clear
-    else:
-        st.session_state.clear_list = []
+if 'clear_list' not in st.session_state:
+    st.session_state.clear_list = []
 def save_todo():
     local_storage.setItem(
         "todo_list",
@@ -54,35 +49,34 @@ def page_todo():
 
     st.markdown("---")
 
-    for i, item in enumerate(st.session_state.todo_list):
+    for i in range(len(st.session_state.todo_list)):
         col_task, col_btn, col_status = st.columns([4, 1, 1])
-    
+
         with col_task:
-            st.write(f"{i+1}. {item[0]}")
-    
+            st.write(f"{i+1}. {st.session_state.todo_list[i][0]}")
+
         with col_btn:
             if st.button("완료", key=f"complete_{i}"):
-    
-                # 완료 기록으로 이동
-                st.session_state.clear_list.append(item)
-    
-                # 현재 목록에서 삭제
+                st.session_state.clear_list.append(st.session_state.todo_list[i])
                 st.session_state.todo_list.pop(i)
-    
+
+
+                # 완료 상태 저장
                 save_todo()
+
                 st.rerun()
-    
             if st.button("제거", key=f"delete_{i}"):
-    
-                # 그냥 삭제
                 st.session_state.todo_list.pop(i)
-    
+
+                # 제거
                 save_todo()
+
                 st.rerun()
 
         with col_status:
-            if item[1]:
+            if st.session_state.todo_list[i][1]:
                 st.write("✅ **달성!**")
+
     st.markdown("---")
 def page_report():
     st.header("AI가 짜주는 세부 목표 ")
