@@ -145,11 +145,154 @@ def pg2():
         except json.JSONDecodeError:
             st.error("JSON 파싱 중 오류가 발생했습니다.")
             st.text(st.session_state["ai_result_147"])
+def pg3():
+    st.title("🤖 AI와 함께 목표 달성하기")
 
+    plan = local_storage.getItem("goal_plan")
+    checked = local_storage.getItem("checked")
+
+    if not plan:
+        st.warning("먼저 2페이지에서 목표 계획을 만들어주세요.")
+        return
+
+    if checked is None:
+        checked = {}
+
+
+    # 현재 진행 상태 계산
+    total = 0
+    done = 0
+    unfinished = []
+
+    for m_idx, middle in enumerate(plan["middle_goals"]):
+        for s_idx, small in enumerate(middle["small_goals"]):
+
+            key = f"{m_idx}_{s_idx}"
+
+            total += 1
+
+            if checked.get(key):
+                done += 1
+            else:
+                unfinished.append(small)
+
+
+    rate = int(done / total * 100) if total else 0
+
+
+    # -------------------
+    # AI 채팅
+    # -------------------
+
+    st.header("🧐 AI 코치와 대화하기")
+
+
+    if "coach_messages" not in st.session_state:
+
+        st.session_state.coach_messages = [
+            {
+                "role": "system",
+                "content":
+                """
+                너는 목표 달성 전문 코치다.
+                사용자의 목표와 진행률을 분석하고
+                현실적인 다음 행동을 제안한다.
+                """
+            }
+        ]
+
+
+    # 이전 대화 출력
+
+    for message in st.session_state.coach_messages:
+
+        if message["role"] != "system":
+
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+
+
+    question = st.chat_input(
+        "목표 달성에 대해 물어보세요"
+    )
+
+
+    if question:
+
+        st.session_state.coach_messages.append(
+            {
+                "role":"user",
+                "content":question
+            }
+        )
+
+
+        with st.chat_message("user"):
+            st.markdown(question)
+
+
+
+        with st.chat_message("assistant"):
+
+            context = f"""
+현재 목표:
+{plan["main_goal"]}
+
+현재 진행률:
+{rate}%
+
+완료한 개수:
+{done}/{total}
+
+아직 남은 목표:
+{unfinished}
+
+사용자의 질문:
+{question}
+"""
+
+
+            with st.spinner("AI 코치가 생각 중...🤔"):
+
+                response = ai_client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {
+                            "role":"system",
+                            "content":
+                            """
+                            너는 사용자의 목표 달성을 돕는 AI 코치다.
+                            진행 상황을 보고 구체적인 행동 계획,
+                            동기부여, 개선 방법을 알려준다.
+                            """
+                        },
+                        {
+                            "role":"user",
+                            "content":context
+                        }
+                    ]
+                )
+
+
+                ai_response = response.choices[0].message.content
+
+
+                st.markdown(ai_response)
+
+
+
+        st.session_state.coach_messages.append(
+            {
+                "role":"assistant",
+                "content":ai_response
+            }
+        )
 pg = st.navigation(
     [
         st.Page(pg1, title="앞으로 해야할 큰 목표"),
-        st.Page(pg2, title="AI가 짜주는 1-4-7 세부 목표")
+        st.Page(pg2, title="AI가 짜주는 1-4-7 세부 목표"),
+        st.Page(pg3, title="AI와 얘기하며 목표 달성")
     ],
     position="top"
 )
