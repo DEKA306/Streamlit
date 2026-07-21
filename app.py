@@ -107,8 +107,32 @@ def pg2():
 
             result = response.choices[0].message.content
 
-            st.subheader("세부 목표")
-            st.write(result)
+            # --- [출력 부분 수정] ---
+            try:
+                result_data = json.loads(result)
+                
+                st.subheader(f"🎯 [{result_data.get('main_goal', main_goal)}] 실행 계획")
+                st.markdown("---")
+
+                steps = result_data.get("steps", [])
+                
+                for idx, step in enumerate(steps, 1):
+                    with st.container(border=True):
+                        col1, col2, col3 = st.columns([3, 1, 1])
+                        
+                        with col1:
+                            st.markdown(f"### **Step {idx}. {step.get('title', '')}**")
+                        with col2:
+                            st.markdown(f"⏱️ **기간:** {step.get('duration', '-')}")
+                        with col3:
+                            st.markdown(f"🔥 **우선순위:** {step.get('priority', '-')}")
+                        
+                        st.write(step.get("description", ""))
+
+            except json.JSONDecodeError:
+                st.error("JSON 파싱 중 오류가 발생했습니다.")
+                st.text(result)
+            # ------------------------
 
     else:
         st.warning("먼저 1페이지에서 목표를 입력해주세요.")
