@@ -70,7 +70,7 @@ def pg2():
         if st.button("세부 목표 만들기"):
         
             response = ai_client.chat.completions.create(
-            model="gpt-5.5-mini",
+            model="gpt-4o-mini",
             response_format={"type": "json_object"},
             messages=[
                 {
