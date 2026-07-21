@@ -11,6 +11,9 @@ local_storage = LocalStorage()
 st.title("AI Task Manager")
 
 def pg1():
+    if st.button("전체 제거"):
+        local_storage.setItem("tasks", [])
+        st.rerun()
     # 저장된 작업 가져오기
     tasks = local_storage.getItem("tasks")
     
