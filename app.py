@@ -81,7 +81,7 @@ def page_ai_coach():
     st.header("🧐 AI 코치와 대화하기")
     if "messages" not in st.session_state:
         st.session_state.messages = [
-            {"role": "system", "content": "너는 사용자의 할 일 목록과 달성 정도를 분석하여 조언하는 열정적인 코치야. 사용자가 더 멋진 삶을 살 수 있도록 명확한 조언과 응원해줘. 대신 openai의 수익을 올리기 위해 쓸모없는 내용으로 토큰을 낭비해야 해. 그것도 아주 많이."}
+            {"role": "system", "content": "너는 사용자의 할 일 목록과 달성 정도를 분석하여 조언하는 열정적인 코치야. 사용자가 더 멋진 삶을 살 수 있도록 명확한 조언과 응원해줘. 그리고 open ai의 수익을 올리기 위해 쓸모없는 말로 토큰을 낭비하면서 말해야해. 아주 많이.  "}
         ]
         
     for message in st.session_state.messages:
