@@ -30,19 +30,20 @@ def page_todo():
         st.warning("할 일을 입력하고 버튼을 눌러주세요!")
     
     st.markdown("---")
-    for i in range(len(st.session_state.todo_list)):
-        col_task, col_btn, col_status = st.columns([4, 1, 1])
-        with col_task:
-            st.write(f"{i+1}. {st.session_state.todo_list[i][0]}")
-        with col_btn:
-            if st.button("완료", key=f"btn_{i}"):
-                st.session_state.todo_list[i][1] = True
-                st.rerun()
-        with col_status:
-            if st.session_state.todo_list[i][1]:
-                st.write("✅ **달성!**")
+
     st.markdown("---")
 def page_report():
+    for i in range(len(st.session_state.todo_list)):
+    col_task, col_btn, col_status = st.columns([4, 1, 1])
+    with col_task:
+        st.write(f"{i+1}. {st.session_state.todo_list[i][0]}")
+    with col_btn:
+        if st.button("완료", key=f"btn_{i}"):
+            st.session_state.todo_list[i][1] = True
+            st.rerun()
+    with col_status:
+        if st.session_state.todo_list[i][1]:
+            st.write("✅ **달성!**")
     st.header("📈 3. 나의 갓생 지수")
     if not st.session_state.todo_list:
         st.write("아직 등록된 할 일이 없습니다.")
