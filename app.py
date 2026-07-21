@@ -1,5 +1,5 @@
 import streamlit as st
-
+from openai import OpenAI
 if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
 if 'user_motto' not in st.session_state:
@@ -80,4 +80,13 @@ pg = st.navigation([
     st.Page(page_report, title="나의 갓생 지수", icon="📈")], position="top")
 
 st.title("🌱 갓생 살기 플래너")
+def ai_coach():
+    st.header("ai코치와 대화하기")
+    prompt = st.text_input("질문을 입력하세요")
+    if st.button("보내기"):
+        response = ai_client.responses.create(
+            model="gpt-5.4-mini", 
+            input = prompt
+        )
+        st.write(response.output_text)
 pg.run()
